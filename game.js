@@ -134,7 +134,7 @@ const textNodes = [
     },
     {
         id: 5,
-        text: 'You start running in panic but can not see what is ahead of. You fall into a bottomless pit.',
+        text: 'You start running in panic but can not see what is ahead. You fall into a bottomless pit.',
         options: [
             {
                 text: 'Restart',
