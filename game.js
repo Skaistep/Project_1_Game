@@ -4,7 +4,7 @@
 const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
 
-// State variable that's equal to an empty object, allows to keep a track of what the character has on them for example the goo
+// State variable that's equal to an empty object, allows to keep a track of what the character has on them for example a box of matches
 let state = {}
 
 // This is a function to start up the game and set all of the state and application to where it needs to be
@@ -51,7 +51,7 @@ function showOption(option) {
 // SelectOption(option) is going to take whichever option that we select because we need to know which option we're selecting
 // In order to get to second step, I implemented selectOption function by using nextTextNodeId equal to option.nextText
 // Then take the state and set it equal to Object.assign first the initial state and then the option.setState (this is going to take the current state, add everything from options set state to it and override anything that's already there)
-// For example if blue Goo is true but false in the option set state it's going to set it to false in our state and this is going to return a brand-new object which we're going to set to our current state
+// For example if matches is true but false in the option set state it's going to set it to false in our state and this is going to return a brand-new object which we're going to set to our current state
 // Then after all that is done we just want to show the text node for our nextTextNodeId // FOR STATE INFORMATION TO WORK
 // To restart the game, I used nextText with a negative 1. Instead of the function or selecting an option I set 'if' statement less than or equal to 0 the game will restart.
 function selectOption(option) {
@@ -69,62 +69,62 @@ showTextNode(nextTextNodeId)
 const textNodes = [
     {
         id: 1,
-        text: 'You wake up in a strange place and you see a jar of blue goo near you',
+        text: 'You wake up in pitch dark. It’s cold and there is a strange smell. You feel around on the ground and find a box of matches.',
         options: [
             {
-                text: 'Take goo',
-                setState: { blueGoo: true },
+                text: 'Take matches',
+                setState: { matches: true },
                 nextText: 2
             },
             {
-                text: 'Leave the good',
+                text: 'Leave matches',
                 nextText: 2
             }
         ]
     },
     {
         id: 2,
-        text: 'You venture forth in search of answers to where you are when you come across a merchant.',
+        text: 'After a moment you hear the echo of a familiar voice calling your name.',
         options: [
             {
-                text: 'Trade the goo for a sword',
-                requiredState: (currentState) => currentState.blueGoo,
-                setState: { blueGoo: false, sword:true },
+                text: 'Use matches to see a path and head towards the voice',
+                requiredState: (currentState) => currentState.matches,
+                setState: { matches: false, path:true },
                 nextText: 3
             },
             {
-                text: 'Trade the goo for a shield',
-                requiredState: (currentState) => currentState.blueGoo,
-                setState: { blueGoo: false, shield:true },
+                text: 'Light the matches and look around you',
+                requiredState: (currentState) => currentState.matches,
+                setState: { matches: false, lookAround:true },
                 nextText: 3
             },
             {
-                text: 'Ignore the merchant',
+                text: 'Ignore the voice',
                 nextText: 3
             },
         ]
     },
     {
         id: 3,
-        text: 'After leaving the merchant you start to feel tired and stumble upon a small town next to a dangerous looking castle.',
+        text: 'You now see a light in the direction of the voice but you also hear a loud ROAR to the right of you!',
         options: [
             {
-                text: 'Explore the castle',
+                text: 'Run away from the ROAR',
                 nextText: 4
             },
             {
-                text: 'Find a room to sleep at in the town',
+                text: 'Run towards the source of light',
                 nextText: 5
             },
             {
-                text: 'Find some hay in a stable to sleep in',
+                text: 'Freeze in fear',
                 nextText: 6
             },
         ]
     },
     {
         id: 4,
-        text: 'You are so tired that you fall asleep while exploring the castle and are killed by some terrible monster in your sleep.',
+        text: 'You are too slow and the monster gets you.',
         options: [
             {
                 text: 'Restart',
@@ -134,7 +134,7 @@ const textNodes = [
     },
     {
         id: 5,
-        text: 'Without any money to buy a room you break into the nearest inn and fall asleep. After a few hours of sleep the owner of the inn finds you and has the town guard lock you in a cell.',
+        text: 'You start running in panic but can not see what is ahead of. You fall into a bottomless pit.',
         options: [
             {
                 text: 'Restart',
@@ -144,42 +144,42 @@ const textNodes = [
     },
     {
         id: 6,
-        text: 'You wake up well rested and full of energy ready to explore the nearby castle.',
+        text: 'The source of the roar is approaching and it is blocking your exit. You hear four foot steps and a stench of wet dog getting stronger and stronger. It is a BEAR!!',
         options: [
             {
-                text: 'Explore the castle',
+                text: 'Deal with the enemy',
                 nextText: 7
             }
         ]
     },
     {
         id: 7,
-        text: 'While exploring the castle you come across a horrible monster in your path.',
+        text: 'Your adrenaline kicks in - fight or flight.',
         options: [
             {
-            text: 'Try to run',
+            text: 'Attack',
             nextText: 8
             },
             {
-            text: 'Attack it with your sword',
-            requiredState: (currentState) => currentState.sword,
+            text: 'Run following the path',
+            requiredState: (currentState) => currentState.path,
             nextText: 9
             },
             {
-            text: 'Hide behind your shield',
-            requiredState: (currentState) => currentState.shield,
+            text: 'Put out the matches and hide',
+            requiredState: (currentState) => currentState.lookAround,
             nextText: 10
             },
             {
-            text: 'Throw the blue goo at it',
-            requiredState: (currentState) => currentState.blueGoo,
+            text: 'Throw matches to distract the bear',
+            requiredState: (currentState) => currentState.matches,
             nextText: 11
             }
         ]
         },
         {
         id: 8,
-        text: 'Your attempts to run are in vain and the monster easily catches.',
+        text: 'You foolishly thought you could fight a bear.',
         options: [
             {
             text: 'Restart',
@@ -189,7 +189,7 @@ const textNodes = [
         },
         {
         id: 9,
-        text: 'You foolishly thought this monster could be slain with a single sword.',
+        text: 'Your attempts to run are in vain and the bear easily catches.',
         options: [
             {
             text: 'Restart',
@@ -199,7 +199,7 @@ const textNodes = [
         },
         {
         id: 10,
-        text: 'The monster laughed as you hid behind your shield and ate you.',
+        text: 'The bear could smell the matches and ate you.',
         options: [
             {
             text: 'Restart',
@@ -209,10 +209,10 @@ const textNodes = [
         },
         {
         id: 11,
-        text: 'You threw your jar of goo at the monster and it exploded. After the dust settled you saw the monster was destroyed. Seeing your victory you decide to claim this castle as your and live out the rest of your days there.',
+        text: 'You threw the matches to distract the bear. Silly bear falls for the decoy. You hold your breath and tiptoe towards the exit to avoid alerting the bear of your escape. You succeed to escape the cave and get re-united with your family who were looking for you.',
         options: [
             {
-            text: 'Congratulations. Play Again.',
+            text: 'Congratulations! Play Again.',
             nextText: -1
             }
         ]
